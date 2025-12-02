@@ -1,119 +1,108 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ژورنال معاملاتی XAUUSD - ارتقا یافته</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ژورنال معاملاتی XAUUSD — همگام‌سازی خودکار (پیش‌فرض فعال)</title>
+
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); padding:20px; min-height:100vh }
-        .container{ max-width:1400px; margin:0 auto; background:white; border-radius:15px; box-shadow:0 20px 60px rgba(0,0,0,0.3); overflow:hidden }
-        .header{ background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%); color:white; padding:30px; text-align:center }
-        .header h1{ font-size:28px; margin-bottom:10px }
-        .form-section{ padding:30px }
-        .form-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; margin-bottom:30px }
-        .form-group{ display:flex; flex-direction:column }
-        .form-group label{ font-weight:600; margin-bottom:8px; color:#2c3e50; font-size:14px }
-        .form-group select, .form-group input, .form-group textarea{ padding:12px; border:2px solid #e0e0e0; border-radius:8px; font-size:14px; transition:all .3s; font-family:inherit }
-        .button-group{ display:flex; gap:15px; justify-content:center; margin-top:20px; flex-wrap:wrap }
-        button{ padding:12px 26px; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer }
-        .btn-save{ background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:white }
-        .btn-update{ background:#8e44ad; color:white }
-        .btn-clear{ background:#95a5a6; color:white }
-        .btn-excel{ background:#16a085; color:white }
-        .btn-import{ background:#3498db; color:white }
-        .btn-pdf{ background:#c0392b; color:white }
-        .journal-table{ margin-top:20px; overflow-x:auto }
-        table{ width:100%; border-collapse:collapse; font-size:13px }
-        th, td{ padding:10px; text-align:right; border-bottom:1px solid #e0e0e0 }
-        th{ background:#f8f9fa; font-weight:600; color:#2c3e50; position:sticky; top:0 }
-        tr:hover{ background:#f8f9fa }
-        .selected-row{ background:#e8f0fe !important; }
-        .profit{ color:#27ae60; font-weight:600 }
-        .loss{ color:#e74c3c; font-weight:600 }
-        .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:20px; padding:20px; background:#f8f9fa; border-radius:10px }
-        .stat-card{ background:white; padding:20px; border-radius:8px; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.1) }
-        .section-title{ font-size:20px; color:#2c3e50; margin-bottom:12px; padding-bottom:8px; border-bottom:3px solid #667eea }
-        .filter-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:18px }
-        .small{ padding:8px 12px; border-radius:6px; border:1px solid #ddd }
-        .delete-btn{ background:#e74c3c; color:white; padding:6px 10px; border:none; border-radius:5px; cursor:pointer }
-        .alert{ padding:12px; margin-bottom:12px; border-radius:8px; font-weight:600 }
-        .alert-success{ background:#d4edda; color:#155724; border:1px solid #c3e6cb }
-        .alert-error{ background:#f8d7da; color:#721c24; border:1px solid #f5c6cb }
-        .alert-info{ background:#d1ecf1; color:#0c5460; border:1px solid #bee5eb }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:18px;min-height:100vh}
+        .container{max-width:1200px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+        .header{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:#fff;padding:20px;text-align:center}
+        .header h1{font-size:20px;margin-bottom:6px}
+        .form-section{padding:18px}
+        .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:14px}
+        .form-group{display:flex;flex-direction:column}
+        label{font-weight:600;margin-bottom:6px;color:#2c3e50;font-size:13px}
+        input,select,textarea{padding:10px;border:1.6px solid #e0e0e0;border-radius:8px;font-size:13px}
+        .button-group{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+        button{padding:10px 16px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+        .btn-save{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff}
+        .btn-update{background:#8e44ad;color:#fff}
+        .btn-clear{background:#95a5a6;color:#fff}
+        .btn-excel{background:#16a085;color:#fff}
+        .btn-import{background:#3498db;color:#fff}
+        .btn-pdf{background:#c0392b;color:#fff}
+        .btn-sync{background:#2d9cdb;color:#fff}
+        .sync-config{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+        .hint{font-size:12px;color:#666;margin-top:8px}
+        .journal-table{padding:12px;overflow-x:auto}
+        table{width:100%;border-collapse:collapse;font-size:13px}
+        th,td{padding:10px;text-align:right;border-bottom:1px solid #eaeaea}
+        th{background:#f8f9fa;position:sticky;top:0;font-weight:700;color:#2c3e50}
+        tr:hover{background:#f8f9fa}
+        .selected-row{background:#e8f0fe !important}
+        .delete-btn{background:#e74c3c;color:#fff;padding:6px 10px;border-radius:6px;border:none;cursor:pointer}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:12px;background:#f8f9fa;border-radius:8px;margin-bottom:12px}
+        .stat-card{background:#fff;padding:10px;border-radius:8px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+        .alert{padding:10px;border-radius:8px;margin-bottom:10px;font-weight:700}
+        .alert-success{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+        .alert-error{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+        .alert-info{background:#d1ecf1;color:#0c5460;border:1px solid #bee5eb}
+        .small{padding:8px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer}
+        .config-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 ژورنال معاملاتی XAUUSD - فایل تک‌فایلی (قابل اجرا در GitHub Pages)</h1>
-            <p>نسخه ارتقا یافته: فیلتر بازه زمانی، چند تایم‌فریم روند، خروجی Excel و PDF</p>
+            <h1>📊 ژورنال معاملاتی XAUUSD — همگام‌سازی خودکار (پیش‌فرض فعال)</h1>
+            <p>ذخیره محلی + همگام‌سازی اختیاری با GitHub Gist</p>
         </div>
 
         <div class="form-section">
             <div id="alertContainer"></div>
-            <h2 class="section-title">ثبت معامله جدید</h2>
+
+            <h2 style="margin-bottom:10px;color:#2c3e50">ثبت / ویرایش معامله</h2>
+
             <div class="form-grid">
-                <div class="form-group"><label>تاریخ و زمان <span class="required">*</span></label><input type="datetime-local" id="datetime" required></div>
-                <div class="form-group"><label>نوع معامله <span class="required">*</span></label><select id="tradeType" required><option value="">انتخاب کنید...</option><option value="خرید">خرید (Buy)</option><option value="فروش">فروش (Sell)</option></select></div>
+                <div class="form-group"><label>تاریخ و زمان *</label><input id="datetime" type="datetime-local" required></div>
+                <div class="form-group"><label>نوع معامله *</label><select id="tradeType" required><option value="">انتخاب کنید...</option><option value="خرید">خرید</option><option value="فروش">فروش</option></select></div>
+                <div class="form-group"><label>نماد معاملاتی</label><select id="symbol"><option value="">انتخاب کنید...</option><option>XAU/USD</option><option>EUR/USD</option><option>BTC/USDT</option><option>ETH/USDT</option></select></div>
+                <div class="form-group"><label>نوع ستاپ *</label><select id="setupType" required><option value="">انتخاب کنید...</option><option>شکست جعلی</option><option>پولبک</option><option>ریورسال بار</option></select></div>
 
-                <!-- نماد معاملاتی اختیاری -->
-                <div class="form-group"><label>نماد معاملاتی</label><select id="symbol"><option value="">انتخاب کنید...</option><option value="XAU/USD">XAU/USD</option><option value="EUR/USD">EUR/USD</option><option value="BTC/USDT">BTC/USDT</option><option value="ETH/USDT">ETH/USDT</option><option value="BNB/USDT">BNB/USDT</option><option value="XRP/USDT">XRP/USDT</option><option value="SOL/USDT">SOL/USDT</option><option value="USD/JPY">USD/JPY</option><option value="GBP/USD">GBP/USD</option><option value="USD/CHF">USD/CHF</option><option value="AUD/USD">AUD/USD</option><option value="USD/CAD">USD/CAD</option></select></div>
+                <div class="form-group"><label>روند M15 *</label><select id="trendM15" required><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
+                <div class="form-group"><label>روند M30</label><select id="trendM30"><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
+                <div class="form-group"><label>روند H1</label><select id="trendH1"><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
+                <div class="form-group"><label>روند H4</label><select id="trendH4"><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
 
-                <div class="form-group"><label>نوع ستاپ <span class="required">*</span></label><select id="setupType" required><option value="">انتخاب کنید...</option><option value="شکست جعلی">۱. شکست جعلی (Fake Breakout)</option><option value="پولبک">۲. پولبک</option><option value="ریورسال بار">۳. ریورسال بار ال بروکس</option></select></div>
+                <div class="form-group"><label>روند D1</label><select id="trendD1"><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
+                <div class="form-group"><label>روند MN</label><select id="trendMN"><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
+                <div class="form-group"><label>قیمت ورود</label><input id="entryPrice" type="number" step="0.01" placeholder="مثال: 2050.50"></div>
+                <div class="form-group"><label>حد ضرر (SL)</label><input id="stopLoss" type="number" step="0.01" placeholder="مثال: 2045.00"></div>
 
-                <!-- Multi-timeframe trend selectors -->
-                <div class="form-group"><label>روند M15 <span class="required">*</span></label><select id="trendM15" required><option value="">انتخاب کنید...</option><option value="صعودی">صعودی</option><option value="نزولی">نزولی</option><option value="رنج">رنج</option></select></div>
-                <div class="form-group"><label>روند M30</label><select id="trendM30"><option value="">انتخاب کنید...</option><option value="صعودی">صعودی</option><option value="نزولی">نزولی</option><option value="رنج">رنج</option></select></div>
-                <div class="form-group"><label>روند H1</label><select id="trendH1"><option value="">انتخاب کنید...</option><option value="صعودی">صعودی</option><option value="نزولی">نزولی</option><option value="رنج">رنج</option></select></div>
-                <div class="form-group"><label>روند H4</label><select id="trendH4"><option value="">انتخاب کنید...</option><option value="صعودی">صعودی</option><option value="نزولی">نزولی</option><option value="رنج">رنج</option></select></div>
-                <div class="form-group"><label>روند D1</label><select id="trendD1"><option value="">انتخاب کنید...</option><option value="صعودی">صعودی</option><option value="نزولی">نزولی</option><option value="رنج">رنج</option></select></div>
-                <div class="form-group"><label>روند MN</label><select id="trendMN"><option value="">انتخاب کنید...</option><option value="صعودی">صعودی</option><option value="نزولی">نزولی</option><option value="رنج">رنج</option></select></div>
+                <div class="form-group"><label>حد سود (TP)</label><input id="takeProfit" type="number" step="0.01" placeholder="مثال: 2058.00"></div>
+                <div class="form-group"><label>ریسک (دلار) *</label><select id="riskAmount" required><option value="">انتخاب کنید...</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></div>
+                <div class="form-group"><label>نسبت ریسک به ریوارد (R)</label><select id="riskReward"><option value="">انتخاب کنید...</option><option>1</option><option>1.5</option><option>2</option><option>2.5</option><option>3</option></select></div>
+                <div class="form-group"><label>نتیجه معامله *</label><select id="tradeResult" required><option value="">انتخاب کنید...</option><option>سود</option><option>ضرر</option><option>سربه‌سر</option><option>باز</option></select></div>
 
-                <div class="form-group"><label>قیمت ورود</label><input type="number" id="entryPrice" step="0.01" placeholder="مثال: 2050.50"></div>
-                <div class="form-group"><label>حد ضرر (SL)</label><input type="number" id="stopLoss" step="0.01" placeholder="مثال: 2045.00"></div>
-                <div class="form-group"><label>حد سود (TP)</label><input type="number" id="takeProfit" step="0.01" placeholder="مثال: 2058.00"></div>
-                <div class="form-group"><label>ریسک (دلار) <span class="required">*</span></label><select id="riskAmount" required><option value="">انتخاب کنید...</option><option value="5">۵</option><option value="6">۶</option><option value="7">۷</option><option value="8">۸</option><option value="9">۹</option><option value="10">۱۰</option></select></div>
-                <div class="form-group"><label>نسبت ریسک به ریوارد (R)</label><select id="riskReward"><option value="">انتخاب کنید...</option><option value="1">R = 1</option><option value="1.5">R = 1.5</option><option value="2">R = 2</option><option value="2.5">R = 2.5</option><option value="3">R = 3</option></select></div>
-                <div class="form-group"><label>نتیجه معامله <span class="required">*</span></label><select id="tradeResult" required><option value="">انتخاب کنید...</option><option value="سود">سود</option><option value="ضرر">ضرر</option><option value="سربه‌سر">سربه‌سر</option><option value="باز">باز</option></select></div>
-                <div class="form-group"><label>مبلغ سود/ضرر (دلار)</label><input type="number" id="profitLoss" step="0.01" placeholder="مثال: +7.5 یا -5"></div>
-                <div class="form-group"><label>حالت ذهنی قبل از معامله <span class="required">*</span></label><select id="mentalState" required><option value="">انتخاب کنید...</option><option value="آرام و متمرکز">آرام و متمرکز</option><option value="خوشحال">خوشحال</option><option value="نگران">نگران</option><option value="استرس">استرس</option><option value="عجله">عجله</option><option value="خسته">خسته</option></select></div>
+                <div class="form-group"><label>مبلغ سود/ضرر (دلار)</label><input id="profitLoss" type="number" step="0.01" placeholder="+7.5 یا -5"></div>
+                <div class="form-group"><label>حالت ذهنی قبل از معامله *</label><select id="mentalState" required><option value="">انتخاب کنید...</option><option>آرام و متمرکز</option><option>خوشحال</option><option>نگران</option><option>استرس</option></select></div>
             </div>
 
-            <div class="form-grid">
-                <div class="form-group"><label>چرا وارد این معامله شدم؟ <span class="required">*</span></label><select id="reasonEntry" required>
+            <div class="form-grid" style="margin-top:8px">
+                <div class="form-group"><label>چرا وارد این معامله شدم؟ *</label><select id="reasonEntry" required>
                     <option value="">انتخاب کنید...</option>
-                    <option value="سطح حمایت/مقاومت قوی + تأیید پرایس اکشن">سطح حمایت/مقاومت قوی + تأیید پرایس اکشن</option>
-                    <option value="شکست جعلی با حجم بالا + ریورسال بار">شکست جعلی با حجم بالا + ریورسال بار</option>
-                    <option value="پولبک به سطح شکسته شده در راستای روند">پولبک به سطح شکسته شده در راستای روند</option>
-                    <option value="رد شدن قوی از سطح کلیدی با سایه بلند">رد شدن قوی از سطح کلیدی با سایه بلند</option>
-                    <option value="همگرایی چند تایم‌فریم (M5 + M15)">همگرایی چند تایم‌فریم (M5 + M15)</option>
-                    <option value="ستاپ کتابی ال بروکس - ریسک به ریوارد عالی">ستاپ کتابی ال بروکس - ریسک به ریوارد عالی</option>
-                    <option value="سیگنال قوی در جهت روند اصلی M15">سیگنال قوی در جهت روند اصلی M15</option>
-                    <option value="پین بار با رد شدن از منطقه ارزشمند">پین بار با رد شدن از منطقه ارزشمند</option>
-                    <option value="شکست رنج با افزایش مومنتوم">شکست رنج با افزایش مومنتوم</option>
-                    <option value="تست مجدد سطح + کندل تأیید قوی">تست مجدد سطح + کندل تأیید قوی</option>
-                    <option value="دو بار رد شدن از یک سطح (Double Test)">دو بار رد شدن از یک سطح (Double Test)</option>
-                    <option value="فرصت کم‌ریسک با حد ضرر کوچک">فرصت کم‌ریسک با حد ضرر کوچک</option>
-                    <option value="سیگنال زودهنگام - FOMO">❌ سیگنال زودهنام - FOMO</option>
-                    <option value="بدون تأیید کافی وارد شدم">❌ بدون تأیید کافی وارد شدم</option>
-                    <option value="خلاف روند M15 معامله کردم">❌ خلاف روند M15 معامله کردم</option>
+                    <option>سطح حمایت/مقاومت قوی + تأیید پرایس اکشن</option>
+                    <option>شکست جعلی با حجم بالا + ریورسال بار</option>
+                    <option>پولبک به سطح شکسته شده در راستای روند</option>
                 </select></div>
 
-                <div class="form-group"><label>احساسات در طول معامله</label><select id="emotions"><option value="">انتخاب کنید...</option><option value="آرام و کنترل کامل - معامله‌ای حرفه‌ای">آرام و کنترل کامل - معامله‌ای حرفه‌ای</option><option value="اعتماد به نفس بالا - به پلن پایبند بودم">اعتماد به نفس بالا - به پلن پایبند بودم</option><option value="صبور و منتظر تأیید ماندم">صبور و منتظر تأیید ماندم</option><option value="احساس خوب - سیستم رو دنبال کردم">احساس خوب - سیستم رو دنبال کردم</option><option value="بی‌طرف و عینی - هیجان نداشتم">بی‌طرف و عینی - هیجان نداشتم</option><option value="متمرکز و در لحظه حاضر">متمرکز و در لحظه حاضر</option><option value="کمی استرس ولی مدیریت شده">کمی استرس ولی مدیریت شده</option><option value="نگرانی از ضرر قبلی">نگرانی از ضرر قبلی</option><option value="دلهره برای رسیدن به حد سود">دلهره برای رسیدن به حد سود</option><option value="چند بار چارت رو چک کردم (اضطراب)">چند بار چارت رو چک کردم (اضطراب)</option><option value="طمع - خواستم بیشتر سود کنم">طمع - خواستم بیشتر سود کنم</option></select></div>
+                <div class="form-group"><label>احساسات در طول معامله</label><select id="emotions"><option value="">انتخاب کنید...</option><option>آرام و کنترل کامل</option><option>اعتماد به نفس بالا</option><option>کمی استرس</option></select></div>
 
-                <div class="form-group"><label>اشتباهات من</label><select id="mistakes"><option value="">انتخاب کنید...</option><option value="هیچ اشتباهی - طبق پلن عمل کردم">هیچ اشتباهی - طبق پلن عمل کردم</option><option value="خیلی زود وارد شدم - قبل از تأیید">خیلی زود وارد شدم - قبل از تأیید</option><option value="حد ضرر خیلی گشاد بود (بیش از 10 دلار)">حد ضرر خیلی گشاد بود (بیش از 10 دلار)</option><option value="خلاف روند M15 معامله کردم">خلاف روند M15 معامله کردم</option><option value="استاپ لاس رو جابه‌جا کردم و بیشتر ضرر کردم">استاپ لاس رو جابه‌جا کردم و بیشتر ضرر کردم</option></select></div>
+                <div class="form-group"><label>اشتباهات من</label><select id="mistakes"><option value="">انتخاب کنید...</option><option>هیچ اشتباهی</option><option>خیلی زود وارد شدم</option><option>حد ضرر خیلی گشاد بود</option></select></div>
 
-                <div class="form-group"><label>چه چیزی باید بهبود یابد؟</label><select id="improvements"><option value="">انتخاب کنید...</option><option value="ادامه بده - همین مسیر درسته">ادامه بده - همین مسیر درسته</option><option value="صبورتر باشم - منتظر تأیید کامل بمانم">صبورتر باشم - منتظر تأیید کامل بمانم</option><option value="چک‌لیست رو جدی‌تر بگیرم">چک‌لیست رو جدی‌تر بگیرم</option><option value="فقط در جهت روند M15 معامله کنم">فقط در جهت روند M15 معامله کنم</option></select></div>
-          
-                <div class="form-group">
+                <div class="form-group"><label>چه چیزی باید بهبود یابد؟</label><select id="improvements"><option value="">انتخاب کنید...</option><option>صبورتر باشم</option><option>چک‌لیست رو جدی‌تر بگیرم</option></select></div>
+
+                <div class="form-group" style="grid-column:1/-1">
                     <label>توضیحات</label>
-                    <textarea id="description" placeholder="توضیحات خود را وارد کنید..." rows="3"></textarea>
+                    <textarea id="description" rows="3" placeholder="توضیحات..."></textarea>
                 </div>
             </div>
 
@@ -125,26 +114,55 @@
                 <button class="btn-import" onclick="document.getElementById('fileInput').click()">📤 بارگذاری Excel</button>
                 <button class="btn-pdf" onclick="exportToPDF()">📕 خروجی PDF</button>
             </div>
-            <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls" onchange="importFromExcel(event)">
+
+            <!-- Sync UI -->
+            <div style="margin-top:14px;border-top:1px dashed #eee;padding-top:12px">
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <strong>همگام‌سازی با GitHub Gist (اختیاری)</strong>
+                    <button class="btn-sync" onclick="saveToGist()">⬆️ ذخیره در Gist</button>
+                    <button class="btn-sync" onclick="loadFromGist()">⬇️ بارگذاری از Gist</button>
+                    <button class="btn-sync" onclick="createGist()">🆕 ایجاد Gist جدید</button>
+                </div>
+
+                <div class="sync-config">
+                    <input id="gistToken" placeholder="توکن GitHub (personal access token)" type="password" />
+                    <input id="gistId" placeholder="Gist ID (اختیاری)" />
+                    <button class="small" onclick="saveGistConfig()">ذخیره تنظیمات</button>
+                    <button class="small" onclick="clearGistConfig()">پاک کردن تنظیمات</button>
+                </div>
+
+                <div class="config-row">
+                    <label style="font-weight:700">همگام‌سازی خودکار:</label>
+                    <!-- هر دو تیک پیش‌فرض checked هستند؛ JS نیز اگر تنظیمی وجود نداشته باشد آن را true در نظر می‌گیرد -->
+                    <label><input id="autoPush" type="checkbox" checked> Auto‑push (آپلود خودکار پس از ذخیره/ویرایش)</label>
+                    <label><input id="autoPull" type="checkbox" checked> Auto‑pull (بارگذاری دوره‌ای از Gist)</label>
+                    <label>فاصله Pull (دقیقه): <input id="pullInterval" type="number" min="1" value="5" style="width:70px;padding:6px;border-radius:6px;border:1px solid #ddd"></label>
+                    <button class="small" onclick="saveGistConfig()">ذخیره تنظیمات</button>
+                </div>
+
+                <div class="hint">نکته: برای همگام‌سازی خودکار، توکن با دسترسی gist لازم است. Auto‑push پس از ذخیره/ویرایش اجرا می‌شود؛ Auto‑pull به صورت دوره‌ای (پیش‌فرض ۵ دقیقه) اجرا می‌شود.</div>
+            </div>
+
+            <input id="fileInput" type="file" accept=".xlsx,.xls" style="display:none" onchange="importFromExcel(event)">
         </div>
 
         <div class="form-section">
             <h2 class="section-title">آمار و فیلتر بازه زمانی</h2>
 
-            <div class="filter-row">
-                <label>از: <input type="date" id="fromDate" class="small"></label>
-                <label>تا: <input type="date" id="toDate" class="small"></label>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+                <label>از: <input id="fromDate" type="date" class="small"></label>
+                <label>تا: <input id="toDate" type="date" class="small"></label>
                 <button class="small" onclick="applyFilter()">اعمال فیلتر</button>
                 <button class="small" onclick="resetFilter()">نمایش همه</button>
                 <div id="currentFilter" style="margin-right:10px;color:#2c3e50;font-weight:700"></div>
             </div>
 
             <div class="stats" id="stats">
-                <div class="stat-card"><h3>تعداد کل معاملات</h3><p id="totalTrades">0</p></div>
-                <div class="stat-card"><h3>معاملات سودده</h3><p id="winningTrades" class="profit">0</p></div>
-                <div class="stat-card"><h3>معاملات ضررده</h3><p id="losingTrades" class="loss">0</p></div>
-                <div class="stat-card"><h3>نرخ برد (%)</h3><p id="winRate">0%</p></div>
-                <div class="stat-card"><h3>سود/ضرر بازه</h3><p id="totalPL">$0</p></div>
+                <div class="stat-card"><h4>تعداد کل معاملات</h4><p id="totalTrades">0</p></div>
+                <div class="stat-card"><h4>معاملات سودده</h4><p id="winningTrades" class="profit">0</p></div>
+                <div class="stat-card"><h4>معاملات ضررده</h4><p id="losingTrades" class="loss">0</p></div>
+                <div class="stat-card"><h4>نرخ برد (%)</h4><p id="winRate">0%</p></div>
+                <div class="stat-card"><h4>سود/ضرر بازه</h4><p id="totalPL">$0</p></div>
             </div>
 
             <h2 class="section-title">تاریخچه معاملات</h2>
@@ -152,401 +170,571 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>تاریخ</th>
-                            <th>نوع</th>
-                            <th>نماد</th>
-                            <th>ستاپ</th>
-                            <th>M15</th>
-                            <th>M30</th>
-                            <th>H1</th>
-                            <th>H4</th>
-                            <th>D1</th>
-                            <th>MN</th>
-                            <th>ریسک</th>
-                            <th>R:R</th>
-                            <th>نتیجه</th>
-                            <th>سود/ضرر</th>
-                            <th>توضیحات</th>
-                            <th>عملیات</th>
+                            <th>تاریخ</th><th>نوع</th><th>نماد</th><th>ستاپ</th><th>M15</th><th>M30</th><th>H1</th><th>H4</th><th>D1</th><th>MN</th><th>ریسک</th><th>R:R</th><th>نتیجه</th><th>سود/ضرر</th><th>توضیحات</th><th>عملیات</th>
                         </tr>
                     </thead>
                     <tbody id="tradesTable">
-                        <tr><td colspan="16" style="text-align:center;padding:40px;color:#95a5a6;">هنوز معامله‌ای ثبت نشده است</td></tr>
+                        <tr><td colspan="16" style="text-align:center;padding:40px;color:#95a5a6">هنوز معامله‌ای ثبت نشده است</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <script>
-        let trades = [];
-        let filteredTrades = null; // null = no filter applied
-        let selectedRowId = null;  // رکورد انتخاب‌شده برای نمایش/ویرایش
+<script>
+/* ============================
+   وضعیت و داده‌ها
+   ============================ */
+let trades = [];
+let filteredTrades = null;
+let selectedRowId = null;
 
-        // load
-        function loadTrades(){
-            const saved = localStorage.getItem('xauusdTrades');
-            if(saved){
-                trades = JSON.parse(saved);
-                updateTable();
-                updateStats();
-            }
-        }
+/* تنظیمات همگام‌سازی */
+let autoPushTimer = null;   // برای debounce push
+let autoPullIntervalId = null; // برای interval pull
+const PUSH_DEBOUNCE_MS = 1200; // پس از ذخیره/ویرایش صبر می‌کند سپس push می‌کند
+const DEFAULT_PULL_MINUTES = 5;
 
-        function showAlert(message,type='success'){
-            const alertContainer=document.getElementById('alertContainer');
-            const alertDiv=document.createElement('div');
-            alertDiv.className=`alert alert-${type}`;
-            alertDiv.textContent=message;
-            alertContainer.appendChild(alertDiv);
-            setTimeout(()=>alertDiv.remove(),4000);
-        }
+/* ======= قالب تاریخ/زمان یکنواخت ======= */
+const DATE_TIME_OPTIONS = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
+function formatDateTime(value){
+    if(!value) return '';
+    // اگر مقدار از نوع Date یا رشته ISO باشد، تبدیل کن
+    let d;
+    if(value instanceof Date) d = value;
+    else d = new Date(value);
+    if(isNaN(d.getTime())) return String(value);
+    try{
+        return d.toLocaleString('fa-IR', DATE_TIME_OPTIONS);
+    }catch(e){
+        // fallback
+        return d.toLocaleString();
+    }
+}
 
-        function readForm(){
-            return {
-                datetime:document.getElementById('datetime').value,
-                tradeType:document.getElementById('tradeType').value,
-                symbol:document.getElementById('symbol').value, // اختیاری
-                setupType:document.getElementById('setupType').value,
-                trendM15:document.getElementById('trendM15').value,
-                trendM30:document.getElementById('trendM30').value,
-                trendH1:document.getElementById('trendH1').value,
-                trendH4:document.getElementById('trendH4').value,
-                trendD1:document.getElementById('trendD1').value,
-                trendMN:document.getElementById('trendMN').value,
-                entryPrice:document.getElementById('entryPrice').value,
-                stopLoss:document.getElementById('stopLoss').value,
-                takeProfit:document.getElementById('takeProfit').value,
-                riskAmount:document.getElementById('riskAmount').value,
-                riskReward:document.getElementById('riskReward').value,
-                tradeResult:document.getElementById('tradeResult').value,
-                profitLoss:document.getElementById('profitLoss').value,
-                mentalState:document.getElementById('mentalState').value,
-                reasonEntry:document.getElementById('reasonEntry').value,
-                emotions:document.getElementById('emotions').value,
-                mistakes:document.getElementById('mistakes').value,
-                improvements:document.getElementById('improvements').value,
-                description:document.getElementById('description').value
-            };
-        }
+/* ======= بارگذاری اولیه ======= */
+function loadTrades(){
+    const saved = localStorage.getItem('xauusdTrades');
+    if(saved){
+        try{ trades = JSON.parse(saved); } catch(e){ trades = []; }
+    }
 
-        function validate(trade){
-            return trade.datetime && trade.tradeType && trade.setupType && trade.trendM15 && trade.riskAmount && trade.tradeResult && trade.mentalState && trade.reasonEntry;
-        }
+    // بارگذاری تنظیمات gist
+    const token = localStorage.getItem('xau_gist_token') || '';
+    const gistId = localStorage.getItem('xau_gist_id') || '';
+    document.getElementById('gistToken').value = token;
+    document.getElementById('gistId').value = gistId;
 
-        function saveTrade(){
-            const payload = readForm();
-            if(!validate(payload)){
-                showAlert('لطفاً فیلدهای اجباری را پر کنید','error');
-                return;
-            }
-            const trade = { id: Date.now(), ...payload };
-            trades.push(trade);
-            localStorage.setItem('xauusdTrades',JSON.stringify(trades));
-            selectedRowId = trade.id;
-            updateTable();
-            updateStats();
-            showAlert('✅ معامله با موفقیت ذخیره شد!','success');
-            // اسکرول به جدول برای مشاهده رکورد ذخیره‌شده
-            document.getElementById('tradesTable').parentElement.scrollIntoView({ behavior:'smooth', block:'start' });
-        }
+    // اگر کاربر قبلاً تنظیمی ذخیره نکرده باشد، پیش‌فرض Auto push/pull را فعال در نظر می‌گیریم
+    const storedAutoPush = localStorage.getItem('xau_auto_push');
+    const storedAutoPull = localStorage.getItem('xau_auto_pull');
+    const storedPullInterval = localStorage.getItem('xau_pull_interval');
 
-        function updateTrade(){
-            if(selectedRowId === null){
-                showAlert('هیچ رکوردی برای ویرایش انتخاب نشده است','error');
-                return;
-            }
-            const payload = readForm();
-            if(!validate(payload)){
-                showAlert('لطفاً فیلدهای اجباری را پر کنید','error');
-                return;
-            }
-            // پیدا کردن رکورد در آرایه اصلی (فارغ از فیلتر)
-            const idx = trades.findIndex(t => t.id === selectedRowId);
-            if(idx === -1){
-                showAlert('رکورد انتخابی در داده‌ها پیدا نشد','error');
-                return;
-            }
-            trades[idx] = { ...trades[idx], ...payload }; // حفظ id
-            localStorage.setItem('xauusdTrades',JSON.stringify(trades));
-            // اگر فیلتر فعال است، مجدد اعمال شود تا لیست و هایلایت درست شوند
-            if(filteredTrades!==null) applyFilter(); else updateTable();
-            updateStats();
-            showAlert('🛠️ معامله با موفقیت به‌روزرسانی شد','success');
-        }
+    const autoPush = (storedAutoPush === null) ? true : (storedAutoPush === '1');
+    const autoPull = (storedAutoPull === null) ? true : (storedAutoPull === '1');
+    const pullInterval = parseInt(storedPullInterval || DEFAULT_PULL_MINUTES, 10);
 
-        function getActiveList(){ return filteredTrades !== null ? filteredTrades : trades; }
+    // اگر مقدار در localStorage وجود نداشت، مقدار پیش‌فرض را در localStorage هم ذخیره کن
+    if(storedAutoPush === null) localStorage.setItem('xau_auto_push','1');
+    if(storedAutoPull === null) localStorage.setItem('xau_auto_pull','1');
+    if(storedPullInterval === null) localStorage.setItem('xau_pull_interval', String(pullInterval));
 
-        function updateTable(){
-            const tbody=document.getElementById('tradesTable');
-            const list=getActiveList();
-            if(list.length===0){
-                tbody.innerHTML=`<tr><td colspan="16" style="text-align:center;padding:40px;color:#95a5a6;">هنوز معامله‌ای ثبت نشده است</td></tr>`;
-                return;
-            }
+    document.getElementById('autoPush').checked = autoPush;
+    document.getElementById('autoPull').checked = autoPull;
+    document.getElementById('pullInterval').value = pullInterval;
 
-            tbody.innerHTML = list.map(trade=>{
-                const pl = parseFloat(trade.profitLoss) || 0;
-                const plClass = pl>0?'profit':pl<0?'loss':'';
-                const plSign = pl>0?'+':'';
-                const isSelected = trade.id === selectedRowId ? 'selected-row' : '';
-                return `
-                    <tr class="${isSelected}" data-id="${trade.id}" onclick="selectTrade(${trade.id})">
-                        <td>${trade.datetime? new Date(trade.datetime).toLocaleString('fa-IR') : ''}</td>
-                        <td>${trade.tradeType}</td>
-                        <td>${trade.symbol || '-'}</td>
-                        <td>${trade.setupType}</td>
-                        <td>${trade.trendM15||'-'}</td>
-                        <td>${trade.trendM30||'-'}</td>
-                        <td>${trade.trendH1||'-'}</td>
-                        <td>${trade.trendH4||'-'}</td>
-                        <td>${trade.trendD1||'-'}</td>
-                        <td>${trade.trendMN||'-'}</td>
-                        <td>$${trade.riskAmount}</td>
-                        <td>${trade.riskReward || '-'}</td>
-                        <td>${trade.tradeResult}</td>
-                        <td class="${plClass}">${plSign}$${(trade.profitLoss||0)}</td>
-                        <td>${trade.description ? trade.description.replace(/</g,'&lt;').replace(/>/g,'&gt;') : '-'}</td>
-                        <td>
-                            <button class="delete-btn" onclick="event.stopPropagation(); deleteTrade(${trade.id})">حذف</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
+    // اگر autoPull فعال است، شروع کن
+    if(autoPull) startAutoPull(pullInterval);
 
-        function selectTrade(id){
-            const list = getActiveList();
-            const trade = list.find(t => t.id === id);
-            if(!trade) return;
+    updateTable(); updateStats();
+}
 
-            selectedRowId = id;
-            // پر کردن فرم
-            document.getElementById('datetime').value = trade.datetime || '';
-            document.getElementById('tradeType').value = trade.tradeType || '';
-            document.getElementById('symbol').value = trade.symbol || '';
-            document.getElementById('setupType').value = trade.setupType || '';
-            document.getElementById('trendM15').value = trade.trendM15 || '';
-            document.getElementById('trendM30').value = trade.trendM30 || '';
-            document.getElementById('trendH1').value = trade.trendH1 || '';
-            document.getElementById('trendH4').value = trade.trendH4 || '';
-            document.getElementById('trendD1').value = trade.trendD1 || '';
-            document.getElementById('trendMN').value = trade.trendMN || '';
-            document.getElementById('entryPrice').value = trade.entryPrice || '';
-            document.getElementById('stopLoss').value = trade.stopLoss || '';
-            document.getElementById('takeProfit').value = trade.takeProfit || '';
-            document.getElementById('riskAmount').value = trade.riskAmount || '';
-            document.getElementById('riskReward').value = trade.riskReward || '';
-            document.getElementById('tradeResult').value = trade.tradeResult || '';
-            document.getElementById('profitLoss').value = trade.profitLoss || '';
-            document.getElementById('mentalState').value = trade.mentalState || '';
-            document.getElementById('reasonEntry').value = trade.reasonEntry || '';
-            document.getElementById('emotions').value = trade.emotions || '';
-            document.getElementById('mistakes').value = trade.mistakes || '';
-            document.getElementById('improvements').value = trade.improvements || '';
-            document.getElementById('description').value = trade.description || '';
+/* ======= نمایش پیام ======= */
+function showAlert(message, type='success'){
+    const container = document.getElementById('alertContainer');
+    const div = document.createElement('div');
+    div.className = 'alert ' + (type==='success' ? 'alert-success' : type==='info' ? 'alert-info' : 'alert-error');
+    div.textContent = message;
+    container.appendChild(div);
+    setTimeout(()=>div.remove(),4500);
+}
 
-            updateTable(); // برای هایلایت ردیف انتخابی
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+/* ======= فرم ======= */
+function readForm(){
+    return {
+        datetime: document.getElementById('datetime').value,
+        tradeType: document.getElementById('tradeType').value,
+        symbol: document.getElementById('symbol').value,
+        setupType: document.getElementById('setupType').value,
+        trendM15: document.getElementById('trendM15').value,
+        trendM30: document.getElementById('trendM30').value,
+        trendH1: document.getElementById('trendH1').value,
+        trendH4: document.getElementById('trendH4').value,
+        trendD1: document.getElementById('trendD1').value,
+        trendMN: document.getElementById('trendMN').value,
+        entryPrice: document.getElementById('entryPrice').value,
+        stopLoss: document.getElementById('stopLoss').value,
+        takeProfit: document.getElementById('takeProfit').value,
+        riskAmount: document.getElementById('riskAmount').value,
+        riskReward: document.getElementById('riskReward').value,
+        tradeResult: document.getElementById('tradeResult').value,
+        profitLoss: document.getElementById('profitLoss').value,
+        mentalState: document.getElementById('mentalState').value,
+        reasonEntry: document.getElementById('reasonEntry').value,
+        emotions: document.getElementById('emotions').value,
+        mistakes: document.getElementById('mistakes').value,
+        improvements: document.getElementById('improvements').value,
+        description: document.getElementById('description').value
+    };
+}
 
-        function updateStats(){
-            const list=getActiveList();
-            const total=list.length;
-            const winning=list.filter(t=>parseFloat(t.profitLoss)>0).length;
-            const losing=list.filter(t=>parseFloat(t.profitLoss)<0).length;
-            const winRate = total>0?((winning/total)*100).toFixed(1):0;
-            const totalPL = list.reduce((s,t)=>s + (parseFloat(t.profitLoss)||0),0).toFixed(2);
-            document.getElementById('totalTrades').textContent = total;
-            document.getElementById('winningTrades').textContent = winning;
-            document.getElementById('losingTrades').textContent = losing;
-            document.getElementById('winRate').textContent = winRate + '%';
-            const plEl=document.getElementById('totalPL');
-            plEl.textContent = '$' + totalPL;
-            plEl.className = totalPL>0?'profit':totalPL<0?'loss':'';
-        }
+function validate(trade){
+    return trade.datetime && trade.tradeType && trade.setupType && trade.trendM15 && trade.riskAmount && trade.tradeResult && trade.mentalState && trade.reasonEntry;
+}
 
-        function deleteTrade(id){
-            if(confirm('آیا مطمئن هستید؟')){
-                trades = trades.filter(t=>t.id!==id);
-                if(selectedRowId === id){ // اگر رکورد حذف‌شده انتخابی بود، فرم را پاک کنیم
-                    clearForm();
-                }
-                localStorage.setItem('xauusdTrades',JSON.stringify(trades));
-                if(filteredTrades!==null) applyFilter(); else { updateTable(); updateStats(); }
-                showAlert('معامله حذف شد','info');
-            }
-        }
+/* ======= ذخیره محلی و همگام‌سازی خودکار ======= */
+function persistLocal(){
+    localStorage.setItem('xauusdTrades', JSON.stringify(trades));
+}
 
-        function clearForm(){
-            document.querySelectorAll('input, select, textarea').forEach(el=>el.value='');
-            selectedRowId = null;
-            updateTable();
-        }
+/* debounce push: پس از هر ذخیره/ویرایش، اگر autoPush فعال باشد، push انجام می‌شود */
+function scheduleAutoPush(){
+    const enabled = document.getElementById('autoPush').checked;
+    if(!enabled) return;
+    if(autoPushTimer) clearTimeout(autoPushTimer);
+    autoPushTimer = setTimeout(()=> {
+        saveToGist().catch(()=>{/* خطاها در داخل تابع مدیریت می‌شوند */});
+    }, PUSH_DEBOUNCE_MS);
+}
 
-        // Filter functions
-        function applyFilter(){
-            const from=document.getElementById('fromDate').value;
-            const to=document.getElementById('toDate').value;
-            if(!from && !to){ showAlert('لطفاً حداقل یکی از دو تاریخ را وارد کنید','error'); return; }
-            const fromTS = from ? new Date(from + 'T00:00:00').getTime() : -Infinity;
-            const toTS = to ? new Date(to + 'T23:59:59').getTime() : Infinity;
-            filteredTrades = trades.filter(t=>{
-                if(!t.datetime) return false;
-                const ts = new Date(t.datetime).getTime();
-                return ts >= fromTS && ts <= toTS;
-            });
-            document.getElementById('currentFilter').textContent = (from? ('از '+from) : '') + (to? (' تا '+to) : '');
-            // اگر رکورد انتخابی در لیست فیلتر شده وجود ندارد، انتخاب را خنثی کن
-            if(filteredTrades && !filteredTrades.some(t => t.id === selectedRowId)) selectedRowId = null;
-            updateTable();
-            updateStats();
-            showAlert(`✅ ${filteredTrades.length} معامله در بازه انتخابی یافت شد`,'success');
-        }
-
-        function resetFilter(){
-            filteredTrades = null;
-            document.getElementById('fromDate').value='';
-            document.getElementById('toDate').value='';
-            document.getElementById('currentFilter').textContent='';
-            updateTable();
-            updateStats();
-            showAlert('نمایش همه معاملات','info');
-        }
-
-        // Excel export (uses current list / filtered)
-        function exportToExcel(){
-            const list = getActiveList();
-            if(list.length===0){ showAlert('هیچ معامله‌ای برای خروجی وجود ندارد!','error'); return; }
-            const worksheet_data = [
-                ['تاریخ','نوع معامله','نماد','نوع ستاپ','M15','M30','H1','H4','D1','MN','قیمت ورود','حد ضرر','حد سود','ریسک ($)','R:R','نتیجه','سود/ضرر ($)','حالت ذهنی','دلیل ورود','توضیحات']
-            ];
-            list.forEach(t=>{
-                worksheet_data.push([
-                    t.datetime? new Date(t.datetime).toLocaleString('fa-IR') : '',
-                    t.tradeType,
-                    t.symbol || '',
-                    t.setupType,
-                    t.trendM15 || '',
-                    t.trendM30 || '',
-                    t.trendH1 || '',
-                    t.trendH4 || '',
-                    t.trendD1 || '',
-                    t.trendMN || '',
-                    t.entryPrice || '',
-                    t.stopLoss || '',
-                    t.takeProfit || '',
-                    t.riskAmount,
-                    t.riskReward || '',
-                    t.tradeResult,
-                    t.profitLoss || '0',
-                    t.mentalState || '',
-                    t.reasonEntry || '',
-                    t.description || ''
-                ]);
-            });
-            const ws = XLSX.utils.aoa_to_sheet(worksheet_data);
-            ws['!cols'] = new Array(worksheet_data[0].length).fill({wch:18});
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'معاملات');
-            const fileName = `XAUUSD_Journal_${new Date().toISOString().split('T')[0]}.xlsx`;
-            XLSX.writeFile(wb, fileName);
-            showAlert('✅ فایل Excel با موفقیت ذخیره شد!','success');
-        }
-
-        // PDF export (current list)
-        async function exportToPDF(){
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({unit:'pt',format:'a4'});
-            const list = getActiveList();
-            if(list.length===0){ showAlert('هیچ معامله‌ای برای خروجی وجود ندارد!','error'); return; }
-            const head = [['تاریخ','نوع','نماد','ستاپ','M15','M30','H1','H4','D1','MN','ریسک','R:R','نتیجه','سود/ضرر','توضیحات']];
-            const body = list.map(t => [
-                t.datetime ? new Date(t.datetime).toLocaleString('fa-IR') : '',
-                t.tradeType,
-                t.symbol || '-',
-                t.setupType,
-                t.trendM15||'-',
-                t.trendM30||'-',
-                t.trendH1||'-',
-                t.trendH4||'-',
-                t.trendD1||'-',
-                t.trendMN||'-',
-                '$'+(t.riskAmount||''),
-                t.riskReward||'-',
-                t.tradeResult,
-                (t.profitLoss||0),
-                (t.description||'')
-            ]);
-            doc.setFontSize(10);
-            doc.text('ژورنال معاملاتی XAUUSD',40,40);
-            doc.autoTable({
-                head: head,
-                body: body,
-                startY: 60,
-                styles:{ font:'helvetica', fontSize:9, halign:'right' },
-                headStyles:{ fillColor:[102,126,234] },
-                margin:{left:20,right:20}
-            });
-            const fileName = `XAUUSD_Journal_${new Date().toISOString().split('T')[0]}.pdf`;
-            doc.save(fileName);
-            showAlert('✅ خروجی PDF ایجاد شد','success');
-        }
-
-        // Import from Excel (append)
-        function importFromExcel(event){
-            const file = event.target.files[0]; if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e){
+/* مدیریت Auto Pull دوره‌ای */
+function startAutoPull(minutes){
+    stopAutoPull();
+    const ms = Math.max(1, minutes) * 60 * 1000;
+    autoPullIntervalId = setInterval(()=> {
+        const token = document.getElementById('gistToken').value.trim() || localStorage.getItem('xau_gist_token') || '';
+        const gistId = document.getElementById('gistId').value.trim() || localStorage.getItem('xau_gist_id') || '';
+        if(token && gistId){
+            fetch(`https://api.github.com/gists/${gistId}`, { method:'GET', headers: { 'Authorization': 'token ' + token } })
+            .then(res => {
+                if(!res.ok) throw new Error('Gist load failed');
+                return res.json();
+            })
+            .then(data => {
+                const file = data.files && (data.files['xauusd_trades.json'] || data.files[Object.keys(data.files)[0]]);
+                if(!file || !file.content) return;
                 try{
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data,{type:'array'});
-                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
-                    if(jsonData.length===0){ showAlert('فایل Excel خالی است!','error'); return; }
-                    if(confirm(`آیا می‌خواهید ${jsonData.length} معامله را وارد کنید؟ (داده‌های فعلی حفظ می‌شوند)`)){
-                        jsonData.forEach(row=>{
-                            const trade = {
-                                id: Date.now()+Math.random(),
-                                datetime: row['تاریخ'] || row['Date'] || '',
-                                tradeType: row['نوع معامله'] || row['Type'] || '',
-                                symbol: row['نماد'] || row['Symbol'] || '',
-                                setupType: row['نوع ستاپ'] || row['Setup'] || '',
-                                trendM15: row['M15'] || row['روند M15'] || '',
-                                trendM30: row['M30'] || '',
-                                trendH1: row['H1'] || '',
-                                trendH4: row['H4'] || '',
-                                trendD1: row['D1'] || '',
-                                trendMN: row['MN'] || '',
-                                entryPrice: row['قیمت ورود'] || '',
-                                stopLoss: row['حد ضرر'] || '',
-                                takeProfit: row['حد سود'] || '',
-                                riskAmount: row['ریسک ($)'] || row['Risk'] || '',
-                                riskReward: row['R:R'] || '',
-                                tradeResult: row['نتیجه'] || '',
-                                profitLoss: row['سود/ضرر ($)'] || row['PL'] || '0',
-                                mentalState: row['حالت ذهنی'] || '',
-                                reasonEntry: row['دلیل ورود'] || '',
-                                description: row['توضیحات'] || row['Description'] || ''
-                            };
-                            trades.push(trade);
-                        });
-                        localStorage.setItem('xauusdTrades',JSON.stringify(trades));
-                        // حفظ یا ریست انتخاب
-                        if(filteredTrades!==null) applyFilter(); else { updateTable(); updateStats(); }
-                        showAlert(`✅ ${jsonData.length} معامله با موفقیت بارگذاری شد!`,'success');
+                    const remote = JSON.parse(file.content);
+                    if(!Array.isArray(remote)) return;
+                    // Merge ساده: رکوردهای remote که id ندارند یا id جدید دارند را اضافه می‌کنیم
+                    let changed = false;
+                    const localIds = new Set(trades.map(t=>t.id));
+                    remote.forEach(r => {
+                        if(!r.id || !localIds.has(r.id)){
+                            trades.push({ ...r, id: r.id || (Date.now()+Math.random()) });
+                            changed = true;
+                        }
+                    });
+                    if(changed){
+                        persistLocal();
+                        if(filteredTrades!==null) applyFilter(); else updateTable();
+                        updateStats();
+                        showAlert('🔄 داده‌ها از Gist همگام‌سازی شدند (merge خودکار)','info');
                     }
-                }catch(err){
-                    console.error(err);
-                    showAlert('خطا در خواندن فایل Excel!','error');
-                }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value='';
+                }catch(e){ /* ignore parse errors */ }
+            })
+            .catch(()=>{/* ignore auto-pull errors silently */});
         }
+    }, ms);
+}
 
-        // Initialize
-        loadTrades();
-    </script>
+function stopAutoPull(){
+    if(autoPullIntervalId) { clearInterval(autoPullIntervalId); autoPullIntervalId = null; }
+}
+
+/* ======= عملیات CRUD ======= */
+function saveTrade(){
+    const payload = readForm();
+    if(!validate(payload)){ showAlert('لطفاً فیلدهای اجباری را پر کنید','error'); return; }
+    const trade = { id: Date.now(), ...payload };
+    trades.push(trade);
+    persistLocal();
+    selectedRowId = trade.id;
+    updateTable(); updateStats();
+    showAlert('✅ معامله با موفقیت ذخیره شد!','success');
+    scheduleAutoPush();
+}
+
+function updateTrade(){
+    if(selectedRowId === null){ showAlert('هیچ رکوردی برای ویرایش انتخاب نشده است','error'); return; }
+    const payload = readForm();
+    if(!validate(payload)){ showAlert('لطفاً فیلدهای اجباری را پر کنید','error'); return; }
+    const idx = trades.findIndex(t => t.id === selectedRowId);
+    if(idx === -1){ showAlert('رکورد انتخابی در داده‌ها پیدا نشد','error'); return; }
+    trades[idx] = { ...trades[idx], ...payload };
+    persistLocal();
+    if(filteredTrades!==null) applyFilter(); else updateTable();
+    updateStats();
+    showAlert('🛠️ معامله با موفقیت به‌روزرسانی شد','success');
+    scheduleAutoPush();
+}
+
+function deleteTrade(id){
+    if(!confirm('آیا مطمئن هستید؟')) return;
+    trades = trades.filter(t=>t.id!==id);
+    if(selectedRowId === id) clearForm();
+    persistLocal();
+    if(filteredTrades!==null) applyFilter(); else { updateTable(); updateStats(); }
+    showAlert('معامله حذف شد','info');
+    scheduleAutoPush();
+}
+
+function clearForm(){
+    document.querySelectorAll('input, select, textarea').forEach(el=>el.value='');
+    selectedRowId = null;
+    updateTable();
+}
+
+/* ======= جدول و آمار ======= */
+function getActiveList(){ return filteredTrades !== null ? filteredTrades : trades; }
+
+function updateTable(){
+    const tbody = document.getElementById('tradesTable');
+    const list = getActiveList();
+    if(list.length === 0){
+        tbody.innerHTML = `<tr><td colspan="16" style="text-align:center;padding:40px;color:#95a5a6">هنوز معامله‌ای ثبت نشده است</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = list.map(trade=>{
+        const pl = parseFloat(trade.profitLoss) || 0;
+        const plClass = pl>0 ? 'profit' : pl<0 ? 'loss' : '';
+        const plSign = pl>0 ? '+' : '';
+        const isSelected = trade.id === selectedRowId ? 'selected-row' : '';
+        return `
+            <tr class="${isSelected}" data-id="${trade.id}" onclick="selectTrade(${trade.id})">
+                <td>${formatDateTime(trade.datetime)}</td>
+                <td>${trade.tradeType}</td>
+                <td>${trade.symbol || '-'}</td>
+                <td>${trade.setupType}</td>
+                <td>${trade.trendM15||'-'}</td>
+                <td>${trade.trendM30||'-'}</td>
+                <td>${trade.trendH1||'-'}</td>
+                <td>${trade.trendH4||'-'}</td>
+                <td>${trade.trendD1||'-'}</td>
+                <td>${trade.trendMN||'-'}</td>
+                <td>$${trade.riskAmount}</td>
+                <td>${trade.riskReward || '-'}</td>
+                <td>${trade.tradeResult}</td>
+                <td class="${plClass}">${plSign}$${(trade.profitLoss||0)}</td>
+                <td>${trade.description ? trade.description.replace(/</g,'&lt;').replace(/>/g,'&gt;') : '-'}</td>
+                <td><button class="delete-btn" onclick="event.stopPropagation(); deleteTrade(${trade.id})">حذف</button></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function selectTrade(id){
+    const list = getActiveList();
+    const trade = list.find(t => t.id === id);
+    if(!trade) return;
+    selectedRowId = id;
+    document.getElementById('datetime').value = trade.datetime || '';
+    document.getElementById('tradeType').value = trade.tradeType || '';
+    document.getElementById('symbol').value = trade.symbol || '';
+    document.getElementById('setupType').value = trade.setupType || '';
+    document.getElementById('trendM15').value = trade.trendM15 || '';
+    document.getElementById('trendM30').value = trade.trendM30 || '';
+    document.getElementById('trendH1').value = trade.trendH1 || '';
+    document.getElementById('trendH4').value = trade.trendH4 || '';
+    document.getElementById('trendD1').value = trade.trendD1 || '';
+    document.getElementById('trendMN').value = trade.trendMN || '';
+    document.getElementById('entryPrice').value = trade.entryPrice || '';
+    document.getElementById('stopLoss').value = trade.stopLoss || '';
+    document.getElementById('takeProfit').value = trade.takeProfit || '';
+    document.getElementById('riskAmount').value = trade.riskAmount || '';
+    document.getElementById('riskReward').value = trade.riskReward || '';
+    document.getElementById('tradeResult').value = trade.tradeResult || '';
+    document.getElementById('profitLoss').value = trade.profitLoss || '';
+    document.getElementById('mentalState').value = trade.mentalState || '';
+    document.getElementById('reasonEntry').value = trade.reasonEntry || '';
+    document.getElementById('emotions').value = trade.emotions || '';
+    document.getElementById('mistakes').value = trade.mistakes || '';
+    document.getElementById('improvements').value = trade.improvements || '';
+    document.getElementById('description').value = trade.description || '';
+    updateTable();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateStats(){
+    const list = getActiveList();
+    const total = list.length;
+    const winning = list.filter(t=>parseFloat(t.profitLoss)>0).length;
+    const losing = list.filter(t=>parseFloat(t.profitLoss)<0).length;
+    const winRate = total>0 ? ((winning/total)*100).toFixed(1) : 0;
+    const totalPL = list.reduce((s,t)=>s + (parseFloat(t.profitLoss)||0),0).toFixed(2);
+    document.getElementById('totalTrades').textContent = total;
+    document.getElementById('winningTrades').textContent = winning;
+    document.getElementById('losingTrades').textContent = losing;
+    document.getElementById('winRate').textContent = winRate + '%';
+    const plEl = document.getElementById('totalPL');
+    plEl.textContent = '$' + totalPL;
+    plEl.className = totalPL>0 ? 'profit' : totalPL<0 ? 'loss' : '';
+}
+
+/* ======= فیلتر تاریخ ======= */
+function applyFilter(){
+    const from = document.getElementById('fromDate').value;
+    const to = document.getElementById('toDate').value;
+    if(!from && !to){ showAlert('لطفاً حداقل یکی از دو تاریخ را وارد کنید','error'); return; }
+    const fromTS = from ? new Date(from + 'T00:00:00').getTime() : -Infinity;
+    const toTS = to ? new Date(to + 'T23:59:59').getTime() : Infinity;
+    filteredTrades = trades.filter(t=>{
+        if(!t.datetime) return false;
+        const ts = new Date(t.datetime).getTime();
+        return ts >= fromTS && ts <= toTS;
+    });
+    document.getElementById('currentFilter').textContent = (from?('از '+from):'') + (to?(' تا '+to):'');
+    if(filteredTrades && !filteredTrades.some(t => t.id === selectedRowId)) selectedRowId = null;
+    updateTable(); updateStats();
+    showAlert(`✅ ${filteredTrades.length} معامله در بازه انتخابی یافت شد`,'success');
+}
+
+function resetFilter(){
+    filteredTrades = null;
+    document.getElementById('fromDate').value = '';
+    document.getElementById('toDate').value = '';
+    document.getElementById('currentFilter').textContent = '';
+    updateTable(); updateStats();
+    showAlert('نمایش همه معاملات','info');
+}
+
+/* ======= Excel / PDF / Import ======= */
+function exportToExcel(){
+    const list = getActiveList();
+    if(list.length===0){ showAlert('هیچ معامله‌ای برای خروجی وجود ندارد!','error'); return; }
+    const worksheet_data = [
+        ['تاریخ','نوع معامله','نماد','نوع ستاپ','M15','M30','H1','H4','D1','MN','قیمت ورود','حد ضرر','حد سود','ریسک ($)','R:R','نتیجه','سود/ضرر ($)','حالت ذهنی','دلیل ورود','توضیحات']
+    ];
+    list.forEach(t=>{
+        worksheet_data.push([
+            formatDateTime(t.datetime),
+            t.tradeType, t.symbol || '', t.setupType, t.trendM15 || '', t.trendM30 || '', t.trendH1 || '', t.trendH4 || '', t.trendD1 || '', t.trendMN || '',
+            t.entryPrice || '', t.stopLoss || '', t.takeProfit || '', t.riskAmount, t.riskReward || '', t.tradeResult, t.profitLoss || '0', t.mentalState || '', t.reasonEntry || '', t.description || ''
+        ]);
+    });
+    const ws = XLSX.utils.aoa_to_sheet(worksheet_data);
+    ws['!cols'] = new Array(worksheet_data[0].length).fill({wch:18});
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'معاملات');
+    const fileName = `XAUUSD_Journal_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+    showAlert('✅ فایل Excel با موفقیت ذخیره شد!','success');
+}
+
+async function exportToPDF(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:'pt',format:'a4'});
+    const list = getActiveList();
+    if(list.length===0){ showAlert('هیچ معامله‌ای برای خروجی وجود ندارد!','error'); return; }
+    const head = [['تاریخ','نوع','نماد','ستاپ','M15','M30','H1','H4','D1','MN','ریسک','R:R','نتیجه','سود/ضرر','توضیحات']];
+    const body = list.map(t => [
+        formatDateTime(t.datetime),
+        t.tradeType, t.symbol || '-', t.setupType, t.trendM15||'-', t.trendM30||'-', t.trendH1||'-', t.trendH4||'-', t.trendD1||'-', t.trendMN||'-',
+        '$'+(t.riskAmount||''), t.riskReward||'-', t.tradeResult, (t.profitLoss||0), (t.description||'')
+    ]);
+    doc.setFontSize(10);
+    doc.text('ژورنال معاملاتی XAUUSD',40,40);
+    doc.autoTable({ head: head, body: body, startY: 60, styles:{ font:'helvetica', fontSize:9, halign:'right' }, headStyles:{ fillColor:[102,126,234] }, margin:{left:20,right:20} });
+    const fileName = `XAUUSD_Journal_${new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(fileName);
+    showAlert('✅ خروجی PDF ایجاد شد','success');
+}
+
+function importFromExcel(event){
+    const file = event.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        try{
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data,{type:'array'});
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+            if(jsonData.length===0){ showAlert('فایل Excel خالی است!','error'); return; }
+            if(confirm(`آیا می‌خواهید ${jsonData.length} معامله را وارد کنید؟ (داده‌های فعلی حفظ می‌شوند)`)){
+                jsonData.forEach(row=>{
+                    const trade = {
+                        id: Date.now()+Math.random(),
+                        datetime: row['تاریخ'] || row['Date'] || '',
+                        tradeType: row['نوع معامله'] || row['Type'] || '',
+                        symbol: row['نماد'] || row['Symbol'] || '',
+                        setupType: row['نوع ستاپ'] || row['Setup'] || '',
+                        trendM15: row['M15'] || row['روند M15'] || '',
+                        trendM30: row['M30'] || '',
+                        trendH1: row['H1'] || '',
+                        trendH4: row['H4'] || '',
+                        trendD1: row['D1'] || '',
+                        trendMN: row['MN'] || '',
+                        entryPrice: row['قیمت ورود'] || '',
+                        stopLoss: row['حد ضرر'] || '',
+                        takeProfit: row['حد سود'] || '',
+                        riskAmount: row['ریسک ($)'] || row['Risk'] || '',
+                        riskReward: row['R:R'] || '',
+                        tradeResult: row['نتیجه'] || '',
+                        profitLoss: row['سود/ضرر ($)'] || row['PL'] || '0',
+                        mentalState: row['حالت ذهنی'] || '',
+                        reasonEntry: row['دلیل ورود'] || '',
+                        description: row['توضیحات'] || row['Description'] || ''
+                    };
+                    trades.push(trade);
+                });
+                persistLocal();
+                if(filteredTrades!==null) applyFilter(); else { updateTable(); updateStats(); }
+                showAlert(`✅ ${jsonData.length} معامله با موفقیت بارگذاری شد!`,'success');
+                scheduleAutoPush();
+            }
+        }catch(err){
+            console.error(err);
+            showAlert('خطا در خواندن فایل Excel!','error');
+        }
+    };
+    reader.readAsArrayBuffer(file);
+    event.target.value='';
+}
+
+/* ======= GitHub Gist API ======= */
+function saveGistConfig(){
+    const token = document.getElementById('gistToken').value.trim();
+    const gistId = document.getElementById('gistId').value.trim();
+    if(token) localStorage.setItem('xau_gist_token', token); else localStorage.removeItem('xau_gist_token');
+    if(gistId) localStorage.setItem('xau_gist_id', gistId); else localStorage.removeItem('xau_gist_id');
+
+    // ذخیره تنظیمات auto
+    const autoPush = document.getElementById('autoPush').checked;
+    const autoPull = document.getElementById('autoPull').checked;
+    const pullInterval = parseInt(document.getElementById('pullInterval').value || DEFAULT_PULL_MINUTES, 10);
+    localStorage.setItem('xau_auto_push', autoPush ? '1' : '0');
+    localStorage.setItem('xau_auto_pull', autoPull ? '1' : '0');
+    localStorage.setItem('xau_pull_interval', String(pullInterval));
+
+    // مدیریت autoPull
+    if(autoPull) startAutoPull(pullInterval); else stopAutoPull();
+
+    showAlert('تنظیمات Gist ذخیره شد','success');
+}
+
+function clearGistConfig(){
+    localStorage.removeItem('xau_gist_token');
+    localStorage.removeItem('xau_gist_id');
+    localStorage.removeItem('xau_auto_push');
+    localStorage.removeItem('xau_auto_pull');
+    localStorage.removeItem('xau_pull_interval');
+    document.getElementById('gistToken').value = '';
+    document.getElementById('gistId').value = '';
+    document.getElementById('autoPush').checked = true;
+    document.getElementById('autoPull').checked = true;
+    document.getElementById('pullInterval').value = DEFAULT_PULL_MINUTES;
+    stopAutoPull();
+    showAlert('تنظیمات Gist پاک شد','info');
+}
+
+async function createGist(){
+    const token = document.getElementById('gistToken').value.trim();
+    if(!token){ showAlert('ابتدا توکن GitHub را وارد کنید','error'); return; }
+    const content = JSON.stringify(trades, null, 2);
+    const body = { description: "XAUUSD trades backup (created by journal app)", public: false, files: { "xauusd_trades.json": { content } } };
+    try{
+        const res = await fetch('https://api.github.com/gists', {
+            method: 'POST',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if(!res.ok){ const txt = await res.text(); throw new Error('GitHub API error: ' + res.status + ' ' + txt); }
+        const data = await res.json();
+        const id = data.id;
+        document.getElementById('gistId').value = id;
+        localStorage.setItem('xau_gist_id', id);
+        localStorage.setItem('xau_gist_token', token);
+        showAlert('✅ Gist جدید ایجاد شد و تنظیمات ذخیره شد','success');
+    }catch(err){
+        console.error(err);
+        showAlert('خطا در ایجاد Gist. توکن یا محدودیت API را بررسی کنید','error');
+    }
+}
+
+async function saveToGist(){
+    const token = document.getElementById('gistToken').value.trim() || localStorage.getItem('xau_gist_token') || '';
+    let gistId = document.getElementById('gistId').value.trim() || localStorage.getItem('xau_gist_id') || '';
+    if(!token){ showAlert('توکن GitHub را وارد کنید','error'); return; }
+    if(!gistId){
+        if(!confirm('هیچ Gist ID مشخص نشده. می‌خواهید یک Gist جدید ایجاد شود؟')) return;
+        await createGist();
+        gistId = document.getElementById('gistId').value.trim();
+        if(!gistId) return;
+    }
+    const content = JSON.stringify(trades, null, 2);
+    const body = { files: { "xauusd_trades.json": { content } } };
+    try{
+        const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+            method: 'PATCH',
+            headers: { 'Authorization': 'token ' + token, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if(!res.ok){ const txt = await res.text(); throw new Error('GitHub API error: ' + res.status + ' ' + txt); }
+        localStorage.setItem('xau_gist_token', token);
+        localStorage.setItem('xau_gist_id', gistId);
+        showAlert('✅ داده‌ها با موفقیت در Gist ذخیره شدند','success');
+    }catch(err){
+        console.error(err);
+        showAlert('خطا در ذخیره‌سازی در Gist. شناسه یا توکن را بررسی کنید','error');
+    }
+}
+
+async function loadFromGist(){
+    const token = document.getElementById('gistToken').value.trim() || localStorage.getItem('xau_gist_token') || '';
+    const gistId = document.getElementById('gistId').value.trim() || localStorage.getItem('xau_gist_id') || '';
+    if(!token || !gistId){ showAlert('توکن و Gist ID را وارد کنید','error'); return; }
+    try{
+        const res = await fetch(`https://api.github.com/gists/${gistId}`, { method: 'GET', headers: { 'Authorization': 'token ' + token } });
+        if(!res.ok){ const txt = await res.text(); throw new Error('GitHub API error: ' + res.status + ' ' + txt); }
+        const data = await res.json();
+        const file = data.files && (data.files['xauusd_trades.json'] || data.files[Object.keys(data.files)[0]]);
+        if(!file || !file.content){ showAlert('فایل xauusd_trades.json در Gist پیدا نشد','error'); return; }
+        const remote = JSON.parse(file.content);
+        if(!Array.isArray(remote)){ showAlert('محتوای Gist معتبر نیست (آرایه معاملات انتظار می‌رود)','error'); return; }
+        if(!confirm(`آیا می‌خواهید ${remote.length} رکورد از Gist بارگذاری شود؟ (داده‌های محلی جایگزین خواهند شد)`)) return;
+        trades = remote.map(r => ({ ...r, id: r.id || (Date.now()+Math.random()) }));
+        persistLocal();
+        filteredTrades = null;
+        selectedRowId = null;
+        updateTable(); updateStats();
+        showAlert('✅ داده‌ها از Gist بارگذاری شدند','success');
+    }catch(err){
+        console.error(err);
+        showAlert('خطا در بارگذاری از Gist. شناسه یا توکن را بررسی کنید','error');
+    }
+}
+
+/* ======= مقداردهی اولیه ======= */
+loadTrades();
+
+/* ======= رفتار UI: ذخیره تنظیمات Auto push/pull هنگام تغییر ======= */
+document.getElementById('autoPush').addEventListener('change', ()=> {
+    localStorage.setItem('xau_auto_push', document.getElementById('autoPush').checked ? '1' : '0');
+    showAlert('تنظیم Auto‑push به‌روزرسانی شد','info');
+});
+document.getElementById('autoPull').addEventListener('change', ()=> {
+    const enabled = document.getElementById('autoPull').checked;
+    localStorage.setItem('xau_auto_pull', enabled ? '1' : '0');
+    const minutes = parseInt(document.getElementById('pullInterval').value || DEFAULT_PULL_MINUTES, 10);
+    if(enabled) startAutoPull(minutes); else stopAutoPull();
+    showAlert('تنظیم Auto‑pull به‌روزرسانی شد','info');
+});
+document.getElementById('pullInterval').addEventListener('change', ()=> {
+    const minutes = parseInt(document.getElementById('pullInterval').value || DEFAULT_PULL_MINUTES, 10);
+    localStorage.setItem('xau_pull_interval', String(minutes));
+    if(document.getElementById('autoPull').checked) startAutoPull(minutes);
+    showAlert('فاصله Auto‑pull به‌روزرسانی شد','info');
+});
+</script>
 </body>
 </html>
