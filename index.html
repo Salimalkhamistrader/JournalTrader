@@ -133,7 +133,6 @@
 
                 <div class="config-row">
                     <label style="font-weight:700">همگام‌سازی خودکار:</label>
-                    <!-- هر دو تیک پیش‌فرض checked هستند؛ JS نیز اگر تنظیمی وجود نداشته باشد آن را true در نظر می‌گیرد -->
                     <label><input id="autoPush" type="checkbox" checked> Auto‑push (آپلود خودکار پس از ذخیره/ویرایش)</label>
                     <label><input id="autoPull" type="checkbox" checked> Auto‑pull (بارگذاری دوره‌ای از Gist)</label>
                     <label>فاصله Pull (دقیقه): <input id="pullInterval" type="number" min="1" value="5" style="width:70px;padding:6px;border-radius:6px;border:1px solid #ddd"></label>
@@ -199,7 +198,6 @@ const DEFAULT_PULL_MINUTES = 5;
 const DATE_TIME_OPTIONS = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
 function formatDateTime(value){
     if(!value) return '';
-    // اگر مقدار از نوع Date یا رشته ISO باشد، تبدیل کن
     let d;
     if(value instanceof Date) d = value;
     else d = new Date(value);
@@ -207,7 +205,6 @@ function formatDateTime(value){
     try{
         return d.toLocaleString('fa-IR', DATE_TIME_OPTIONS);
     }catch(e){
-        // fallback
         return d.toLocaleString();
     }
 }
@@ -225,7 +222,7 @@ function loadTrades(){
     document.getElementById('gistToken').value = token;
     document.getElementById('gistId').value = gistId;
 
-    // اگر کاربر قبلاً تنظیمی ذخیره نکرده باشد، پیش‌فرض Auto push/pull را فعال در نظر می‌گیریم
+    // پیش‌فرض Auto push/pull فعال اگر قبلاً ذخیره نشده باشد
     const storedAutoPush = localStorage.getItem('xau_auto_push');
     const storedAutoPull = localStorage.getItem('xau_auto_pull');
     const storedPullInterval = localStorage.getItem('xau_pull_interval');
@@ -234,7 +231,6 @@ function loadTrades(){
     const autoPull = (storedAutoPull === null) ? true : (storedAutoPull === '1');
     const pullInterval = parseInt(storedPullInterval || DEFAULT_PULL_MINUTES, 10);
 
-    // اگر مقدار در localStorage وجود نداشت، مقدار پیش‌فرض را در localStorage هم ذخیره کن
     if(storedAutoPush === null) localStorage.setItem('xau_auto_push','1');
     if(storedAutoPull === null) localStorage.setItem('xau_auto_pull','1');
     if(storedPullInterval === null) localStorage.setItem('xau_pull_interval', String(pullInterval));
@@ -243,7 +239,6 @@ function loadTrades(){
     document.getElementById('autoPull').checked = autoPull;
     document.getElementById('pullInterval').value = pullInterval;
 
-    // اگر autoPull فعال است، شروع کن
     if(autoPull) startAutoPull(pullInterval);
 
     updateTable(); updateStats();
@@ -297,13 +292,20 @@ function persistLocal(){
     localStorage.setItem('xauusdTrades', JSON.stringify(trades));
 }
 
-/* debounce push: پس از هر ذخیره/ویرایش، اگر autoPush فعال باشد، push انجام می‌شود */
+/* debounce push: پس از هر ذخیره/ویرایش، اگر autoPush فعال باشد و تنظیمات Gist کامل باشد، push انجام می‌شود */
 function scheduleAutoPush(){
     const enabled = document.getElementById('autoPush').checked;
     if(!enabled) return;
+
+    // جلوگیری از پیام مزاحم: اگر توکن یا Gist ID تنظیم نشده باشد، Auto‑push را بی‌صدا رد کن
+    const token = document.getElementById('gistToken').value.trim() || localStorage.getItem('xau_gist_token') || '';
+    const gistId = document.getElementById('gistId').value.trim() || localStorage.getItem('xau_gist_id') || '';
+    if(!token || !gistId) return;
+
     if(autoPushTimer) clearTimeout(autoPushTimer);
-    autoPushTimer = setTimeout(()=> {
-        saveToGist().catch(()=>{/* خطاها در داخل تابع مدیریت می‌شوند */});
+    autoPushTimer = setTimeout(() => {
+        // در این حالت saveToGist اجرا می‌شود و چون gistId موجود است، هیچ پیغام تأییدی ظاهر نمی‌شود
+        saveToGist().catch(()=>{});
     }, PUSH_DEBOUNCE_MS);
 }
 
@@ -311,7 +313,7 @@ function scheduleAutoPush(){
 function startAutoPull(minutes){
     stopAutoPull();
     const ms = Math.max(1, minutes) * 60 * 1000;
-    autoPullIntervalId = setInterval(()=> {
+    autoPullIntervalId = setInterval(() => {
         const token = document.getElementById('gistToken').value.trim() || localStorage.getItem('xau_gist_token') || '';
         const gistId = document.getElementById('gistId').value.trim() || localStorage.getItem('xau_gist_id') || '';
         if(token && gistId){
@@ -326,7 +328,6 @@ function startAutoPull(minutes){
                 try{
                     const remote = JSON.parse(file.content);
                     if(!Array.isArray(remote)) return;
-                    // Merge ساده: رکوردهای remote که id ندارند یا id جدید دارند را اضافه می‌کنیم
                     let changed = false;
                     const localIds = new Set(trades.map(t=>t.id));
                     remote.forEach(r => {
@@ -362,6 +363,10 @@ function saveTrade(){
     selectedRowId = trade.id;
     updateTable(); updateStats();
     showAlert('✅ معامله با موفقیت ذخیره شد!','success');
+
+    // پاک کردن فرم بعد از ذخیره
+    clearForm();
+
     scheduleAutoPush();
 }
 
@@ -608,7 +613,6 @@ function saveGistConfig(){
     if(token) localStorage.setItem('xau_gist_token', token); else localStorage.removeItem('xau_gist_token');
     if(gistId) localStorage.setItem('xau_gist_id', gistId); else localStorage.removeItem('xau_gist_id');
 
-    // ذخیره تنظیمات auto
     const autoPush = document.getElementById('autoPush').checked;
     const autoPull = document.getElementById('autoPull').checked;
     const pullInterval = parseInt(document.getElementById('pullInterval').value || DEFAULT_PULL_MINUTES, 10);
@@ -616,7 +620,6 @@ function saveGistConfig(){
     localStorage.setItem('xau_auto_pull', autoPull ? '1' : '0');
     localStorage.setItem('xau_pull_interval', String(pullInterval));
 
-    // مدیریت autoPull
     if(autoPull) startAutoPull(pullInterval); else stopAutoPull();
 
     showAlert('تنظیمات Gist ذخیره شد','success');
@@ -665,6 +668,7 @@ async function saveToGist(){
     const token = document.getElementById('gistToken').value.trim() || localStorage.getItem('xau_gist_token') || '';
     let gistId = document.getElementById('gistId').value.trim() || localStorage.getItem('xau_gist_id') || '';
     if(!token){ showAlert('توکن GitHub را وارد کنید','error'); return; }
+    // ذخیره دستی: اگر Gist ID خالی است، بپرسیم
     if(!gistId){
         if(!confirm('هیچ Gist ID مشخص نشده. می‌خواهید یک Gist جدید ایجاد شود؟')) return;
         await createGist();
@@ -718,18 +722,18 @@ async function loadFromGist(){
 loadTrades();
 
 /* ======= رفتار UI: ذخیره تنظیمات Auto push/pull هنگام تغییر ======= */
-document.getElementById('autoPush').addEventListener('change', ()=> {
+document.getElementById('autoPush').addEventListener('change', () => {
     localStorage.setItem('xau_auto_push', document.getElementById('autoPush').checked ? '1' : '0');
     showAlert('تنظیم Auto‑push به‌روزرسانی شد','info');
 });
-document.getElementById('autoPull').addEventListener('change', ()=> {
+document.getElementById('autoPull').addEventListener('change', () => {
     const enabled = document.getElementById('autoPull').checked;
     localStorage.setItem('xau_auto_pull', enabled ? '1' : '0');
     const minutes = parseInt(document.getElementById('pullInterval').value || DEFAULT_PULL_MINUTES, 10);
     if(enabled) startAutoPull(minutes); else stopAutoPull();
     showAlert('تنظیم Auto‑pull به‌روزرسانی شد','info');
 });
-document.getElementById('pullInterval').addEventListener('change', ()=> {
+document.getElementById('pullInterval').addEventListener('change', () => {
     const minutes = parseInt(document.getElementById('pullInterval').value || DEFAULT_PULL_MINUTES, 10);
     localStorage.setItem('xau_pull_interval', String(minutes));
     if(document.getElementById('autoPull').checked) startAutoPull(minutes);
