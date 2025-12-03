@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>ژورنال معاملاتی XAUUSD — همگام‌سازی خودکار (پیش‌فرض فعال)</title>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+    body, input, select, textarea, button {
+        font-family: 'Vazirmatn', sans-serif !important;
+    }
+</style>
+
+
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -64,7 +72,21 @@
             <div class="form-grid">
                 <div class="form-group"><label>تاریخ و زمان *</label><input id="datetime" type="datetime-local" required></div>
                 <div class="form-group"><label>نوع معامله *</label><select id="tradeType" required><option value="">انتخاب کنید...</option><option value="خرید">خرید</option><option value="فروش">فروش</option></select></div>
-                <div class="form-group"><label>نماد معاملاتی</label><select id="symbol"><option value="">انتخاب کنید...</option><option>XAU/USD</option><option>EUR/USD</option><option>BTC/USDT</option><option>ETH/USDT</option></select></div>
+                <div class="form-group"><label>نماد معاملاتی</label><select id="symbol">
+    <option value="">انتخاب کنید...</option>
+    <option value="XAU/USD">XAU/USD</option>
+    <option value="EUR/USD">EUR/USD</option>
+    <option value="BTC/USDT">BTC/USDT</option>
+    <option value="ETH/USDT">ETH/USDT</option>
+    <option value="BNB/USDT">BNB/USDT</option>
+    <option value="XRP/USDT">XRP/USDT</option>
+    <option value="SOL/USDT">SOL/USDT</option>
+    <option value="USD/JPY">USD/JPY</option>
+    <option value="GBP/USD">GBP/USD</option>
+    <option value="USD/CHF">USD/CHF</option>
+    <option value="AUD/USD">AUD/USD</option>
+    <option value="USD/CAD">USD/CAD</option>
+</select></div>
                 <div class="form-group"><label>نوع ستاپ *</label><select id="setupType" required><option value="">انتخاب کنید...</option><option>شکست جعلی</option><option>پولبک</option><option>ریورسال بار</option></select></div>
 
                 <div class="form-group"><label>روند M15 *</label><select id="trendM15" required><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
@@ -87,18 +109,58 @@
             </div>
 
             <div class="form-grid" style="margin-top:8px">
-                <div class="form-group"><label>چرا وارد این معامله شدم؟ *</label><select id="reasonEntry" required>
-                    <option value="">انتخاب کنید...</option>
-                    <option>سطح حمایت/مقاومت قوی + تأیید پرایس اکشن</option>
-                    <option>شکست جعلی با حجم بالا + ریورسال بار</option>
-                    <option>پولبک به سطح شکسته شده در راستای روند</option>
-                </select></div>
+                <div class="form-group"><label>چرا وارد این معامله شدم؟ *</label>
+                  <select id="reasonEntry" required>
+    <option value="">انتخاب کنید...</option>
+    <option value="سطح حمایت/مقاومت قوی + تأیید پرایس اکشن">سطح حمایت/مقاومت قوی + تأیید پرایس اکشن</option>
+    <option value="شکست جعلی با حجم بالا + ریورسال بار">شکست جعلی با حجم بالا + ریورسال بار</option>
+    <option value="پولبک به سطح شکسته شده در راستای روند">پولبک به سطح شکسته شده در راستای روند</option>
+    <option value="رد شدن قوی از سطح کلیدی با سایه بلند">رد شدن قوی از سطح کلیدی با سایه بلند</option>
+    <option value="همگرایی چند تایم‌فریم (M5 + M15)">همگرایی چند تایم‌فریم (M5 + M15)</option>
+    <option value="ستاپ کتابی ال بروکس - ریسک به ریوارد عالی">ستاپ کتابی ال بروکس - ریسک به ریوارد عالی</option>
+    <option value="سیگنال قوی در جهت روند اصلی M15">سیگنال قوی در جهت روند اصلی M15</option>
+    <option value="پین بار با رد شدن از منطقه ارزشمند">پین بار با رد شدن از منطقه ارزشمند</option>
+    <option value="شکست رنج با افزایش مومنتوم">شکست رنج با افزایش مومنتوم</option>
+    <option value="تست مجدد سطح + کندل تأیید قوی">تست مجدد سطح + کندل تأیید قوی</option>
+    <option value="دو بار رد شدن از یک سطح (Double Test)">دو بار رد شدن از یک سطح (Double Test)</option>
+    <option value="فرصت کم‌ریسک با حد ضرر کوچک">فرصت کم‌ریسک با حد ضرر کوچک</option>
+    <option value="سیگنال زودهنگام - FOMO">❌ سیگنال زودهنگام - FOMO</option>
+    <option value="بدون تأیید کافی وارد شدم">❌ بدون تأیید کافی وارد شدم</option>
+    <option value="خلاف روند M15 معامله کردم">❌ خلاف روند M15 معامله کردم</option>
+</select>
+               </div>
 
-                <div class="form-group"><label>احساسات در طول معامله</label><select id="emotions"><option value="">انتخاب کنید...</option><option>آرام و کنترل کامل</option><option>اعتماد به نفس بالا</option><option>کمی استرس</option></select></div>
+                <div class="form-group"><label>احساسات در طول معامله</label><select id="emotions">
+    <option value="">انتخاب کنید...</option>
+    <option value="آرام و کنترل کامل - معامله‌ای حرفه‌ای">آرام و کنترل کامل - معامله‌ای حرفه‌ای</option>
+    <option value="اعتماد به نفس بالا - به پلن پایبند بودم">اعتماد به نفس بالا - به پلن پایبند بودم</option>
+    <option value="صبور و منتظر تأیید ماندم">صبور و منتظر تأیید ماندم</option>
+    <option value="احساس خوب - سیستم رو دنبال کردم">احساس خوب - سیستم رو دنبال کردم</option>
+    <option value="بی‌طرف و عینی - هیجان نداشتم">بی‌طرف و عینی - هیجان نداشتم</option>
+    <option value="متمرکز و در لحظه حاضر">متمرکز و در لحظه حاضر</option>
+    <option value="کمی استرس ولی مدیریت شده">کمی استرس ولی مدیریت شده</option>
+    <option value="نگرانی از ضرر قبلی">نگرانی از ضرر قبلی</option>
+    <option value="دلهره برای رسیدن به حد سود">دلهره برای رسیدن به حد سود</option>
+    <option value="چند بار چارت رو چک کردم (اضطراب)">چند بار چارت رو چک کردم (اضطراب)</option>
+    <option value="طمع - خواستم بیشتر سود کنم">طمع - خواستم بیشتر سود کنم</option>
+</select></div>
 
-                <div class="form-group"><label>اشتباهات من</label><select id="mistakes"><option value="">انتخاب کنید...</option><option>هیچ اشتباهی</option><option>خیلی زود وارد شدم</option><option>حد ضرر خیلی گشاد بود</option></select></div>
+                <div class="form-group"><label>اشتباهات من</label><select id="mistakes">
+    <option value="">انتخاب کنید...</option>
+    <option value="هیچ اشتباهی - طبق پلن عمل کردم">هیچ اشتباهی - طبق پلن عمل کردم</option>
+    <option value="خیلی زود وارد شدم - قبل از تأیید">خیلی زود وارد شدم - قبل از تأیید</option>
+    <option value="حد ضرر خیلی گشاد بود (بیش از 10 دلار)">حد ضرر خیلی گشاد بود (بیش از 10 دلار)</option>
+    <option value="خلاف روند M15 معامله کردم">خلاف روند M15 معامله کردم</option>
+    <option value="استاپ لاس رو جابه‌جا کردم و بیشتر ضرر کردم">استاپ لاس رو جابه‌جا کردم و بیشتر ضرر کردم</option>
+</select></div>
 
-                <div class="form-group"><label>چه چیزی باید بهبود یابد؟</label><select id="improvements"><option value="">انتخاب کنید...</option><option>صبورتر باشم</option><option>چک‌لیست رو جدی‌تر بگیرم</option></select></div>
+                <div class="form-group"><label>چه چیزی باید بهبود یابد؟</label><select id="improvements">
+    <option value="">انتخاب کنید...</option>
+    <option value="ادامه بده - همین مسیر درسته">ادامه بده - همین مسیر درسته</option>
+    <option value="صبورتر باشم - منتظر تأیید کامل بمانم">صبورتر باشم - منتظر تأیید کامل بمانم</option>
+    <option value="چک‌لیست رو جدی‌تر بگیرم">چک‌لیست رو جدی‌تر بگیرم</option>
+    <option value="فقط در جهت روند M15 معامله کنم">فقط در جهت روند M15 معامله کنم</option>
+</select></div>
 
                 <div class="form-group" style="grid-column:1/-1">
                     <label>توضیحات</label>
