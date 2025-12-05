@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>ژورنال معاملاتی XAUUSD — همگام‌سازی خودکار (پیش‌فرض فعال)</title>
+    <title>ژورنال معاملاتی </title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
@@ -72,8 +72,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 ژورنال معاملاتی XAUUSD — همگام‌سازی خودکار (پیش‌فرض فعال)</h1>
-            <p>ذخیره محلی + همگام‌سازی اختیاری با GitHub Gist</p>
+            <h1>📊 ژورنال معاملاتی </h1>
+            <p>سلیم آل خمیس</p>
         </div>
 
         <div class="form-section">
@@ -99,6 +99,26 @@
     <option value="AUD/USD">AUD/USD</option>
     <option value="USD/CAD">USD/CAD</option>
 </select></div>
+
+
+
+<div class="form-group">
+  <label>حجم معامله (Lot Size) </label>
+  <select id="lotSize" >
+    <option value="">انتخاب کنید...</option>
+    <option value="0.01">0.01</option><option value="0.02">0.02</option><option value="0.03">0.03</option><option value="0.04">0.04</option><option value="0.05">0.05</option><option value="0.06">0.06</option><option value="0.07">0.07</option><option value="0.08">0.08</option><option value="0.09">0.09</option>
+    <option value="0.1">0.1</option><option value="0.11">0.11</option><option value="0.12">0.12</option><option value="0.13">0.13</option><option value="0.14">0.14</option><option value="0.15">0.15</option><option value="0.16">0.16</option><option value="0.17">0.17</option><option value="0.18">0.18</option><option value="0.19">0.19</option>
+    <option value="0.2">0.2</option><option value="0.21">0.21</option><option value="0.22">0.22</option><option value="0.23">0.23</option><option value="0.24">0.24</option><option value="0.25">0.25</option><option value="0.26">0.26</option><option value="0.27">0.27</option><option value="0.28">0.28</option><option value="0.29">0.29</option>	
+    <option value="0.3">0.3</option><option value="0.31">0.31</option><option value="0.32">0.32</option><option value="0.33">0.33</option><option value="0.34">0.34</option><option value="0.35">0.35</option><option value="0.36">0.36</option><option value="0.37">0.37</option><option value="0.38">0.38</option><option value="0.39">0.39</option>	
+    <option value="0.4">0.4</option><option value="0.41">0.41</option><option value="0.42">0.42</option><option value="0.43">0.43</option><option value="0.44">0.44</option><option value="0.45">0.45</option><option value="0.46">0.46</option><option value="0.47">0.47</option><option value="0.48">0.48</option><option value="0.49">0.49</option>
+    <option value="0.5">0.5</option><option value="0.51">0.51</option><option value="0.52">0.52</option><option value="0.53">0.53</option><option value="0.54">0.54</option><option value="0.55">0.55</option><option value="0.56">0.56</option><option value="0.57">0.57</option><option value="0.58">0.58</option><option value="0.59">0.59</option>
+    <option value="0.6">0.5</option>
+ <!-- ... ادامه تا 5.00 -->
+   
+  </select>
+</div>
+
+
                 <div class="form-group"><label>نوع ستاپ *</label><select id="setupType" required><option value="">انتخاب کنید...</option><option>شکست جعلی</option><option>پولبک</option><option>ریورسال بار</option></select></div>
 
                 <div class="form-group"><label>روند M15 *</label><select id="trendM15" required><option value="">انتخاب کنید...</option><option>صعودی</option><option>نزولی</option><option>رنج</option></select></div>
@@ -118,9 +138,12 @@
 
                 <div class="form-group"><label>مبلغ سود/ضرر (دلار)</label><input id="profitLoss" type="number" step="0.01" placeholder="+7.5 یا -5"></div>
                 <div class="form-group"><label>حالت ذهنی قبل از معامله *</label><select id="mentalState" required><option value="">انتخاب کنید...</option><option>آرام و متمرکز</option><option>خوشحال</option><option>نگران</option><option>استرس</option></select></div>
-            </div>
+            
 
-            <div class="form-grid" style="margin-top:8px">
+		
+
+
+
                 <div class="form-group"><label>چرا وارد این معامله شدم؟ *</label>
                   <select id="reasonEntry" required>
     <option value="">انتخاب کنید...</option>
@@ -178,7 +201,13 @@
                     <label>توضیحات</label>
                     <textarea id="description" rows="3" placeholder="توضیحات..."></textarea>
                 </div>
+
+
+
             </div>
+
+
+
 
             <div class="button-group">
                 <button class="btn-save" onclick="saveTrade()">💾 ذخیره معامله</button>
@@ -243,7 +272,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>تاریخ</th><th>نوع</th><th>نماد</th><th>ستاپ</th><th>M15</th><th>M30</th><th>H1</th><th>H4</th><th>D1</th><th>MN</th><th>ریسک</th><th>R:R</th><th>نتیجه</th><th>سود/ضرر</th><th>توضیحات</th><th>عملیات</th>
+                            <th>تاریخ</th><th>نوع</th><th>نماد</th><th>حجم</th><th>ستاپ</th><th>M15</th><th>M30</th><th>H1</th><th>H4</th><th>D1</th><th>MN</th><th>ریسک</th><th>R:R</th><th>نتیجه</th><th>سود/ضرر</th><th>توضیحات</th><th>عملیات</th>
                         </tr>
                     </thead>
                     <tbody id="tradesTable">
@@ -261,6 +290,8 @@
 let trades = [];
 let filteredTrades = null;
 let selectedRowId = null;
+
+
 
 /* تنظیمات همگام‌سازی */
 let autoPushTimer = null;   // برای debounce push
@@ -289,6 +320,7 @@ function loadTrades(){
     if(saved){
         try{ trades = JSON.parse(saved); } catch(e){ trades = []; }
     }
+
 
     // بارگذاری تنظیمات gist
     const token = localStorage.getItem('xau_gist_token') || '';
@@ -334,6 +366,7 @@ function readForm(){
         datetime: document.getElementById('datetime').value,
         tradeType: document.getElementById('tradeType').value,
         symbol: document.getElementById('symbol').value,
+	lotSize: document.getElementById('lotSize').value,
         setupType: document.getElementById('setupType').value,
         trendM15: document.getElementById('trendM15').value,
         trendM30: document.getElementById('trendM30').value,
@@ -354,11 +387,12 @@ function readForm(){
         mistakes: document.getElementById('mistakes').value,
         improvements: document.getElementById('improvements').value,
         description: document.getElementById('description').value
+        
     };
 }
 
 function validate(trade){
-    return trade.datetime && trade.tradeType && trade.setupType && trade.trendM15 && trade.riskAmount && trade.tradeResult && trade.mentalState && trade.reasonEntry;
+    return trade.datetime && trade.tradeType && trade.setupType && trade.trendM15 && trade.riskAmount && trade.tradeResult && trade.mentalState && trade.reasonEntry ;
 }
 
 /* ======= ذخیره محلی و همگام‌سازی خودکار ======= */
@@ -494,6 +528,8 @@ function updateTable(){
                 <td>${formatDateTime(trade.datetime)}</td>
                 <td>${trade.tradeType}</td>
                 <td>${trade.symbol || '-'}</td>
+                
+		<td>${trade.lotSize || ''}</td>
                 <td>${trade.setupType}</td>
                 <td>${trade.trendM15||'-'}</td>
                 <td>${trade.trendM30||'-'}</td>
